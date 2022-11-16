@@ -3,6 +3,9 @@ use std::io::{Read, Write};
 use std::thread;
 mod types;
 use crate::types::request::Request;
+mod routes;
+mod api;
+use crate::routes::router::router_handler;
 
 fn process_url(url: String) {
     let req_parts = url.split(" "); 
@@ -11,8 +14,7 @@ fn process_url(url: String) {
         url: String::from(vec[1]),
         req_type: String::from(vec[0]),
     };
-    println!("type: {}",req.req_type);
-    println!("url: {}", req.url);
+    router_handler(req);
 }
 
 fn handle_read(mut stream: &TcpStream) {
