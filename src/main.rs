@@ -3,6 +3,8 @@ use std::thread;
 mod types;
 use crate::types::request::Request;
 mod routes;
+mod config;
+use crate::config::env::*;
 mod api;
 use crate::routes::router::router_handler;
 
@@ -12,8 +14,11 @@ fn handle_client(stream: TcpStream) {
 }
 
 fn main() {
-    let listener = TcpListener::bind("127.0.0.1:8080").unwrap();
-    println!("Listening for connections on port {}", 8080);
+    let config: Config = load_env();
+    let address = format!("127.0.0.1:{}", config.port);
+
+    let listener = TcpListener::bind(address).unwrap(); // Todo: get rid of unwrap
+    println!("Listening for connections on port {}", config.port);
 
     for stream in listener.incoming() {
         match stream {
