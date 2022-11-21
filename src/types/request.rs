@@ -1,6 +1,8 @@
 use std::net::*;
 use std::io::{Write};
 use std::io::{Read};
+use std::thread;
+use std::process;
 
 pub struct Request {
   pub url: String,
@@ -34,5 +36,9 @@ impl Request {
             },
         Err(e) => panic!("Error: {:?}", e),
     }
+  }
+ 
+  pub fn log(&self) {
+    println!("pid: {:?} tid:{:?} Request:{} {}", process::id() ,thread::current().id() ,self.req_type ,self.url);
   }
 }
