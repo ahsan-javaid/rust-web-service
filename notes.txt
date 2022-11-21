@@ -1,1 +1,2 @@
 Reading on modules: https://www.sheshbabu.com/posts/rust-module-system/
+Postgres:https://rust-lang-nursery.github.io/rust-cookbook/database/postgres.html

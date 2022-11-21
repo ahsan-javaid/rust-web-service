@@ -6,6 +6,7 @@ use crate::api::book::get_book;
 use crate::api::book::create_book;
 
 pub fn router_handler(r: Request) {
+  r.log();
   match r.req_type.as_str() {
     "GET" => get(r),
     "POST" => post(r),
