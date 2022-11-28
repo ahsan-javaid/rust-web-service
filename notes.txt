@@ -1,2 +1,3 @@
 Reading on modules: https://www.sheshbabu.com/posts/rust-module-system/
 https://crates.io/crates/rusqlite
+Postgres:https://rust-lang-nursery.github.io/rust-cookbook/database/postgres.html
