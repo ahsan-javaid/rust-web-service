@@ -19,6 +19,21 @@ impl Request {
     self.socket.shutdown(Shutdown::Both).expect("shutdown call failed");
   }
 
+  pub fn handle_json(mut self, res: String) {
+    println!("let me check {}", res);
+     let result = format!("HTTP/1.1 200 OK\r\nContent-Type: application/json; charset=UTF-8\r\nContent-Length: {}\r\n\r\n{}\r\n", res.len(),res);
+     match self.socket.write_all(result.as_bytes()) {
+         Ok(_) => println!("Response sent"),
+         Err(e) => println!("Failed sending response: {}", e),
+     }
+     match self.socket.flush() {
+      Ok(_) => println!("Response sent"),
+      Err(e) => println!("Failed sending response: {}", e),
+     }
+     // Close connection
+     self.socket.shutdown(Shutdown::Both).expect("shutdown call failed");
+   }
+
   pub fn from(mut stream: TcpStream) -> Request {
     let mut buf = [0u8 ;4096];
     match stream.read(&mut buf) {

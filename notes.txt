@@ -1,1 +1,2 @@
 Reading on modules: https://www.sheshbabu.com/posts/rust-module-system/
+https://crates.io/crates/rusqlite
