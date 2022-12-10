@@ -4,7 +4,6 @@ use crate::api::user::create_user;
 
 use crate::api::book::get_book;
 use crate::api::book::create_book;
-use sqlite::Connection;
 
 pub fn router_handler(r: Request) {
   r.log();
