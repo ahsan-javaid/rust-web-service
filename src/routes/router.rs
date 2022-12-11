@@ -24,7 +24,7 @@ fn get(r: Request) {
 
 fn post(r: Request) {
   match r.url.as_str() {
-    "/user" => create_user(r),
+    "/users" => create_user(r),
     "/book" => create_book(r),
     _ => println!("Ain't special"),
   }
