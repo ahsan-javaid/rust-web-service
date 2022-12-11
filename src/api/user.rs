@@ -1,12 +1,13 @@
 use crate::types::request::Request;
 use crate::types::user::User;
+use crate::types::user::UserPayload;
 use sqlite;
 
 pub fn get_users(r: Request) {
  let connection = sqlite::open("db.db").unwrap();
  let query = "SELECT * FROM users";
  let mut users :Vec<User> = Vec::new();
- 
+
  connection.iterate(query, |pairs| {
         let (_, id) = pairs.get(0).unwrap();
         let (_, name) = pairs.get(1).unwrap();
@@ -27,6 +28,11 @@ pub fn get_users(r: Request) {
 }
 
 pub fn create_user(r: Request) {
-  let res = String::from("Create user called");
-  r.handle_write(res);
+  let user: UserPayload = serde_json::from_str(&r.body).unwrap();
+  let connection = sqlite::open("db.db").unwrap();
+  let q = format!("INSERT INTO users (name, email) values ('{}', '{}')", &user.name, &user.email);  
+  let _ = connection.execute(q).unwrap();
+
+  let serialized = serde_json::to_string(&user).unwrap();
+  r.handle_json(serialized);
 }
