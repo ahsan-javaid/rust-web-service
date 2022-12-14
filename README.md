@@ -6,6 +6,12 @@ Rust web server implemented using tcp protocol without using any frameworks or l
 cargo run
 ```
 
+### Dependencies
+```
+sqlite
+serde
+```
+
 ### API documentation
 ```
 coming soon
