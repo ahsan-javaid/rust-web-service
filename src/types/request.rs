@@ -7,6 +7,7 @@ use std::process;
 pub struct Request {
   pub url: String,
   pub body: String,
+  pub param: u32,
   pub req_type: String, // GET, PUT, POST, DELETE
   pub socket: TcpStream
 }
@@ -45,6 +46,8 @@ impl Request {
             let req_parts = req_str.split(" "); 
             let vec: Vec<&str> = req_parts.collect();
             let body: String;
+           
+            // Parsing request body
             if vec[0] == "POST" {
               let start = req_str.find("{").unwrap();
               let end = req_str.find("}").unwrap();
@@ -52,9 +55,11 @@ impl Request {
             } else {
               body = String::from("")
             }
+
             Request {
                 url: String::from(vec[1]),
                 body: body,
+                param: 0, // Default param
                 req_type: String::from(vec[0]),
                 socket: stream
             }
