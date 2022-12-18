@@ -8,7 +8,7 @@ pub struct Request {
   pub url: String,
   pub body: String,
   pub param: u32,
-  pub req_type: String, // GET, PUT, POST, DELETE
+  pub method: String, // GET, PUT, POST, DELETE
   pub socket: TcpStream
 }
 
@@ -60,7 +60,7 @@ impl Request {
                 url: String::from(vec[1]),
                 body: body,
                 param: 0, // Default param
-                req_type: String::from(vec[0]),
+                method: String::from(vec[0]),
                 socket: stream
             }
             },
@@ -69,6 +69,6 @@ impl Request {
   }
  
   pub fn log(&self) {
-    println!("pid: {:?} tid:{:?} Request:{} {}", process::id() ,thread::current().id() ,self.req_type ,self.url);
+    println!("pid: {:?} tid:{:?} Request:{} {}", process::id() ,thread::current().id() ,self.method ,self.url);
   }
 }

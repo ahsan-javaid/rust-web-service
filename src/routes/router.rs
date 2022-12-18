@@ -7,7 +7,7 @@ use crate::api::book::create_book;
 
 pub fn router_handler(r: Request) {
   r.log();
-  match r.req_type.as_str() {
+  match r.method.as_str() {
     "GET" => get(r),
     "POST" => post(r),
     _ => println!("Ain't special"),
