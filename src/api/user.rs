@@ -1,9 +1,9 @@
-use crate::types::request::Request;
+use crate::types::context::Context;
 use crate::types::user::User;
 use crate::types::user::UserPayload;
 use sqlite;
 
-pub fn get_users(r: Request) {
+pub fn get_users(ctx: Context) {
  let connection = sqlite::open("db.db").unwrap();
  let query = "SELECT * FROM users";
  let mut users :Vec<User> = Vec::new();
@@ -24,22 +24,22 @@ pub fn get_users(r: Request) {
     .unwrap();
 
     let serialized = serde_json::to_string(&users).unwrap();
-    r.handle_json(serialized);
+    ctx.handle_json(serialized);
 }
 
-pub fn create_user(r: Request) {
-  let user: UserPayload = serde_json::from_str(&r.body).unwrap();
+pub fn create_user(ctx: Context) {
+  let user: UserPayload = serde_json::from_str(&ctx.body).unwrap();
   let connection = sqlite::open("db.db").unwrap();
   let q = format!("INSERT INTO users (name, email) values ('{}', '{}')", &user.name, &user.email);  
   let _ = connection.execute(q).unwrap();
 
   let serialized = serde_json::to_string(&user).unwrap();
-  r.handle_json(serialized);
+  ctx.handle_json(serialized);
 }
 
-pub fn get_user_by_id(r: Request) {
+pub fn get_user_by_id(ctx: Context) {
   let connection = sqlite::open("db.db").unwrap();
-  let query = format!("SELECT * FROM users where id={}", r.param);
+  let query = format!("SELECT * FROM users where id={}", ctx.param);
   let mut users :Vec<User> = Vec::new();
  
   connection.iterate(query, |pairs| {
@@ -58,5 +58,5 @@ pub fn get_user_by_id(r: Request) {
      .unwrap();
  
      let serialized = serde_json::to_string(&users[0]).unwrap();
-     r.handle_json(serialized);
+     ctx.handle_json(serialized);
 }

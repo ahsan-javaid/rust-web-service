@@ -4,7 +4,7 @@ use std::io::{Read};
 use std::thread;
 use std::process;
 
-pub struct Request {
+pub struct Context {
   pub url: String,
   pub body: String,
   pub param: u32,
@@ -12,7 +12,7 @@ pub struct Request {
   pub socket: TcpStream
 }
 
-impl Request {
+impl Context {
   pub fn handle_write(mut self, res: String) {
     let result = format!("HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n<html><body>{}</body></html>\r\n", res);
     match self.socket.write(result.as_bytes()) {
@@ -38,7 +38,7 @@ impl Request {
      self.socket.shutdown(Shutdown::Both).expect("shutdown call failed");
    }
 
-  pub fn from(mut stream: TcpStream) -> Request {
+  pub fn from(mut stream: TcpStream) -> Context {
     let mut buf = [0u8 ;4096];
     match stream.read(&mut buf) {
         Ok(_) => {
@@ -56,7 +56,7 @@ impl Request {
               body = String::from("")
             }
 
-            Request {
+            Context {
                 url: String::from(vec[1]),
                 body: body,
                 param: 0, // Default param

@@ -1,11 +1,11 @@
-use crate::types::request::Request;
+use crate::types::context::Context;
 
-pub fn get_book(r: Request) {
+pub fn get_book(ctx: Context) {
   let res = String::from("Create book called");
-  r.handle_write(res);
+  ctx.handle_write(res);
 }
 
-pub fn create_book(r: Request) {
+pub fn create_book(ctx: Context) {
   let res = String::from("Create book called");
-  r.handle_write(res);
+  ctx.handle_write(res);
 }

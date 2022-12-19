@@ -1,7 +1,7 @@
 use std::net::{TcpStream, TcpListener};
 use std::thread;
 mod types;
-use crate::types::request::Request;
+use crate::types::context::Context;
 mod routes;
 mod config;
 use crate::config::env::*;
@@ -10,7 +10,7 @@ use crate::routes::router::router_handler;
 use sqlite;
 
 fn handle_client(stream: TcpStream) {
-    let request = Request::from(stream);
+    let request = Context::from(stream);
     router_handler(request);
 }
 
