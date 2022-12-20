@@ -1,9 +1,9 @@
-use std::net::{TcpStream, TcpListener};
+use std::net::{TcpListener, TcpStream};
 use std::thread;
 mod types;
 use crate::types::context::Context;
-mod routes;
 mod config;
+mod routes;
 use crate::config::env::*;
 mod api;
 use crate::routes::router::router_handler;
@@ -31,9 +31,7 @@ fn main() {
     for stream in listener.incoming() {
         match stream {
             Ok(stream) => {
-                thread::spawn(|| {
-                    handle_client(stream)
-                });
+                thread::spawn(|| handle_client(stream));
             }
             Err(e) => {
                 panic!("Error: {:?}", e);
