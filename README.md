@@ -14,6 +14,6 @@ serde
 
 ### API documentation
 ```
-coming soon
+coming soon...
 ```
 
