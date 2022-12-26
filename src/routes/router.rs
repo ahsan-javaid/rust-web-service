@@ -3,7 +3,7 @@ use crate::api::user::*;
 use crate::types::context::Context;
 
 use crate::api::book::create_book;
-use crate::api::book::get_book;
+use crate::api::book::get_books;
 
 pub fn router_handler(r: Context) {
     r.log();
@@ -17,7 +17,7 @@ pub fn router_handler(r: Context) {
 fn get(mut ctx: Context) {
     match ctx.url.as_str() {
         "/users" => get_users(ctx),
-        "/book" => get_book(ctx),
+        "/books" => get_books(ctx),
         _ => {
             // Parameter handling
             let urls_parts: Vec<&str> = ctx.url.as_str().split("/").collect();

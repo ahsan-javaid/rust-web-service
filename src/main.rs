@@ -4,6 +4,7 @@ mod types;
 use crate::types::context::Context;
 mod config;
 mod routes;
+mod models;
 use crate::config::env::*;
 mod api;
 use crate::routes::router::router_handler;
@@ -25,6 +26,7 @@ fn main() {
 
     let query = "
         CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT);
+        CREATE TABLE IF NOT EXISTS books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, author TEXT);
     ";
     connection.execute(query).unwrap();
 
