@@ -3,7 +3,7 @@ use crate::api::user::*;
 use crate::types::context::Context;
 
 use crate::api::book::create_book;
-use crate::api::book::get_books;
+use crate::api::book::*;
 
 pub fn router_handler(r: Context) {
     r.log();
@@ -24,7 +24,7 @@ fn get(mut ctx: Context) {
             ctx.param = urls_parts[2].parse::<u32>().unwrap();
             match urls_parts[1] {
                 "users" => get_user_by_id(ctx),
-                "books" => {}
+                "books" => get_book_by_id(ctx),
                 _ => {}
             }
         }
