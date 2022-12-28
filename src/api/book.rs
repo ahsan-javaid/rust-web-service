@@ -1,4 +1,5 @@
 use crate::types::context::Context;
+use crate::types::book::BookPayload;
 use crate::models::book::*;
 
 pub fn get_books(ctx: Context) {
@@ -9,8 +10,17 @@ pub fn get_books(ctx: Context) {
 }
 
 pub fn create_book(ctx: Context) {
-    let res = String::from("Create book called");
-    ctx.handle_write(res);
+    let payload: BookPayload = serde_json::from_str(&ctx.body).unwrap();
+    let book = Book {
+        id: 0,
+        title: payload.title.clone(),
+        author: payload.author.clone()
+    };
+
+    Book::create(&book);
+
+    let serialized = serde_json::to_string(&payload).unwrap();
+    ctx.handle_json(serialized);
 }
 
 pub fn get_book_by_id(ctx: Context) {

@@ -1,5 +1,6 @@
-pub struct Book {
-  pub id: u32,
-  pub name: String,
-  pub author: String,
+use serde::{Deserialize, Serialize};
+#[derive(Serialize, Deserialize, Debug)]
+pub struct BookPayload {
+    pub title: String,
+    pub author: String,
 }

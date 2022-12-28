@@ -34,10 +34,19 @@ impl Book {
     }
 
     pub fn find_by_id(id: u32, book: &mut Book) {
-      let books = Book::find_all(String::from(format!("where id={}", id)));
-      // Todo: add len check
-      book.id = books[0].id;
-      book.title = books[0].title.clone();
-      book.author = books[0].author.clone();
+        let books = Book::find_all(String::from(format!("where id={}", id)));
+        // Todo: add len check
+        book.id = books[0].id;
+        book.title = books[0].title.clone();
+        book.author = books[0].author.clone();
+    }
+
+    pub fn create(book: &Book) {
+        let connection = establish_connection();
+        let q = format!(
+            "INSERT INTO books (title, author) values ('{}', '{}')",
+            &book.title, &book.author
+        );
+        let _ = connection.execute(q).unwrap();
     }
 }

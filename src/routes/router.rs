@@ -16,6 +16,7 @@ pub fn router_handler(r: Context) {
 
 fn get(mut ctx: Context) {
     match ctx.url.as_str() {
+        "/" => ctx.handle_write("Server is listening".to_string()),
         "/users" => get_users(ctx),
         "/books" => get_books(ctx),
         _ => {
