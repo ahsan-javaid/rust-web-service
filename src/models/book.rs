@@ -8,6 +8,15 @@ pub struct Book {
 }
 
 impl Book {
+
+    pub fn new() -> Book {
+        Book {
+            id: 0,
+            title: "".to_string(),
+            author: "".to_string()
+        }
+    }
+
     pub fn find_all(cond: String) -> Vec<Book> {
         let connection = establish_connection();
 
@@ -35,10 +44,13 @@ impl Book {
 
     pub fn find_by_id(id: u32, book: &mut Book) {
         let books = Book::find_all(String::from(format!("where id={}", id)));
-        // Todo: add len check
-        book.id = books[0].id;
-        book.title = books[0].title.clone();
-        book.author = books[0].author.clone();
+        if books.len() == 0 {
+            *book = Book::new();
+        } else {
+            book.id = books[0].id;
+            book.title = books[0].title.clone();
+            book.author = books[0].author.clone();
+        }
     }
 
     pub fn create(book: &Book) {

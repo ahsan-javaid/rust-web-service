@@ -35,7 +35,7 @@ fn get(mut ctx: Context) {
 fn post(ctx: Context) {
     match ctx.url.as_str() {
         "/users" => create_user(ctx),
-        "/book" => create_book(ctx),
+        "/books" => create_book(ctx),
         _ => println!("Ain't special"),
     }
 }

@@ -24,12 +24,7 @@ pub fn create_book(ctx: Context) {
 }
 
 pub fn get_book_by_id(ctx: Context) {
-    let mut book = Book {
-        id: 0,
-        title: "".to_string(),
-        author: "".to_string()
-    };
-
+    let mut book = Book::new();
 
     Book::find_by_id(ctx.param, &mut book);
     // Todo: len check and return 404 not found 
