@@ -3,12 +3,14 @@ use std::fs;
 
 pub struct Config {
     pub port: String,
+    pub db: String,
 }
 
 impl Default for Config {
     fn default() -> Config {
         Config {
             port: "8080".to_string(),
+            db: "sqlite.db".to_string(),
         }
     }
 }
@@ -30,6 +32,11 @@ pub fn load_env() -> Config {
     match env::var("PORT") {
         Ok(v) => c.port = v,
         Err(_) => println!("port env variable not found"),
+    }
+
+    match env::var("DB") {
+        Ok(v) => c.db = v,
+        Err(_) => println!("db env variable not found"),
     }
 
     c
