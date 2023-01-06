@@ -44,12 +44,11 @@ impl Book {
 
     pub fn find_by_id(id: u32, book: &mut Book) {
         let books = Book::find_all(String::from(format!("where id={}", id)));
-        if books.len() == 0 {
-            *book = Book::new();
-        } else {
-            book.id = books[0].id;
-            book.title = books[0].title.clone();
-            book.author = books[0].author.clone();
+        
+        for b in books.iter() {
+            book.id = b.id;
+            book.title = b.title.clone();
+            book.author = b.author.clone();
         }
     }
 
