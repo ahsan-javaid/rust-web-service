@@ -25,15 +25,28 @@ impl Book {
 
         connection
             .iterate(query, |pairs| {
-                let (_, id) = pairs.get(0).unwrap();
-                let (_, title) = pairs.get(1).unwrap();
-                let (_, author) = pairs.get(2).unwrap();
+                
+                let mut book = Book::new();
 
-                books.push(Book {
-                    id: id.unwrap().parse::<u32>().unwrap(),
-                    title: String::from(title.unwrap()),
-                    author: String::from(author.unwrap()),
-                });
+                for p in pairs {
+                    match p.0 {
+                        "id" => {
+                            let id = p.1.unwrap_or("0");
+                            book.id = id.parse::<u32>().unwrap_or(0);
+                        },
+                        "title" => {
+                            let title = p.1.unwrap_or("");
+                            book.title = title.to_string();
+                        },
+                        "author" => {
+                            let author = p.1.unwrap_or("");
+                            book.author = author.to_string();
+                        },
+                        _ => {}
+                    }
+                }
+
+                books.push(book);
 
                 true
             })
