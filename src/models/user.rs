@@ -24,15 +24,26 @@ impl User {
 
         connection
             .iterate(query, |pairs| {
-                let (_, id) = pairs.get(0).unwrap();
-                let (_, name) = pairs.get(1).unwrap();
-                let (_, email) = pairs.get(2).unwrap();
+                let mut user = User::new();
 
-                users.push(User {
-                    id: id.unwrap().parse::<u32>().unwrap(),
-                    name: String::from(name.unwrap()),
-                    email: String::from(email.unwrap()),
-                });
+                for p in pairs {
+                    match p.0 {
+                        "id" => {
+                            let id = p.1.unwrap_or("0");
+                            user.id = id.parse::<u32>().unwrap_or(0);
+                        }
+                        "name" => {
+                            let name = p.1.unwrap_or("");
+                            user.name = name.to_string();
+                        }
+                        "email" => {
+                            let email = p.1.unwrap_or("");
+                            user.email = email.to_string();
+                        }
+                        _ => {}
+                    }
+                }
+                users.push(user);
 
                 true
             })
@@ -43,11 +54,11 @@ impl User {
 
     pub fn find_by_id(id: u32, user: &mut User) {
         let users = User::find_all(String::from(format!("where id={}", id)));
-       
+
         for b in users.iter() {
-          user.id = b.id;
-          user.name = b.name.clone();
-          user.email = b.email.clone();
+            user.id = b.id;
+            user.name = b.name.clone();
+            user.email = b.email.clone();
         }
     }
 
