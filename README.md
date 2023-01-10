@@ -13,7 +13,18 @@ serde
 ```
 
 ### API documentation
+Base url: http://localhost:5000
 ```
-coming soon...
+GET /users
+GET /users/{id}
+POST /users
+GET /books
+GET /books/{id}
+POST /books
 ```
 
+### Models
+```
+User(id, name, email)
+Book(id, title, author)
+```
