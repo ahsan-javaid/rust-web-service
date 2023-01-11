@@ -1,4 +1,5 @@
 use crate::types::context::Context;
+use crate::types::message::Message;
 use crate::types::book::BookPayload;
 use crate::models::book::*;
 
@@ -27,7 +28,16 @@ pub fn get_book_by_id(ctx: Context) {
     let mut book = Book::new();
 
     Book::find_by_id(ctx.param, &mut book);
-    // Todo: len check and return 404 not found 
+
+    if book.id == 0 {
+        let resp = Message {
+            msg: String::from("Book not found")
+        };
+
+        let serialized = serde_json::to_string(&resp).unwrap();
+        return ctx.status(200).handle_json(serialized);
+    }
+
     let serialized = serde_json::to_string(&book).unwrap();
-    ctx.handle_json(serialized);
+    ctx.status(200).handle_json(serialized);
 }

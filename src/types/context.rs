@@ -8,6 +8,7 @@ pub struct Context {
     pub url: String,
     pub body: String,
     pub param: u32,
+    pub status: u16,
     pub method: String, // GET, PUT, POST, DELETE
     pub socket: TcpStream,
 }
@@ -25,8 +26,13 @@ impl Context {
             .expect("shutdown call failed");
     }
 
+    pub fn status(mut self, status: u16) -> Context {
+        self.status = status;
+        self
+    }
+
     pub fn handle_json(mut self, res: String) {
-        let result = format!("HTTP/1.1 200 OK\r\nContent-Type: application/json; charset=UTF-8\r\nContent-Length: {}\r\n\r\n{}\r\n", res.len(),res);
+        let result = format!("HTTP/1.1 {} OK\r\nContent-Type: application/json; charset=UTF-8\r\nContent-Length: {}\r\n\r\n{}\r\n", self.status ,res.len(),res);
         match self.socket.write_all(result.as_bytes()) {
             Ok(_) => println!("Response sent"),
             Err(e) => println!("Failed sending response: {}", e),
@@ -65,6 +71,7 @@ impl Context {
                     param: 0, // Default param
                     method: String::from(vec[0]),
                     socket: stream,
+                    status: 200
                 }
             }
             Err(e) => panic!("Error: {:?}", e),
