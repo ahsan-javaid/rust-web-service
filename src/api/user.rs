@@ -35,7 +35,7 @@ pub fn get_user_by_id(ctx: Context) {
         };
 
         let serialized = serde_json::to_string(&resp).unwrap();
-        return ctx.status(200).handle_json(serialized);
+        return ctx.status(404).handle_json(serialized);
     }   
     
     let serialized = serde_json::to_string(&user).unwrap();

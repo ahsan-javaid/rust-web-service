@@ -11,17 +11,41 @@ pub fn get_books(ctx: Context) {
 }
 
 pub fn create_book(ctx: Context) {
-    let payload: BookPayload = serde_json::from_str(&ctx.body).unwrap();
-    let book = Book {
-        id: 0,
-        title: payload.title.clone(),
-        author: payload.author.clone()
-    };
+    match serde_json::from_str::<BookPayload>(&ctx.body) {
+        Ok(payload) => {
+            let book = Book {
+                id: 0,
+                title: payload.title.clone(),
+                author: payload.author.clone()
+            };
+        
+            Book::create(&book);
+        
+            let serialized = serde_json::to_string(&payload).unwrap();
+            ctx.handle_json(serialized);
+        },
+        Err(e) => {
+            match e.to_string().find("title") {
+                Some(_) => {
+                    let resp = Message {
+                        msg: String::from("title field is required")
+                    };
+                    let serialized = serde_json::to_string(&resp).unwrap();
+                    return ctx.status(400).handle_json(serialized);                },
+                None => {}
+            }
 
-    Book::create(&book);
-
-    let serialized = serde_json::to_string(&payload).unwrap();
-    ctx.handle_json(serialized);
+            match e.to_string().find("author") {
+                Some(_) => {
+                    let resp = Message {
+                        msg: String::from("author field is required")
+                    };
+                    let serialized = serde_json::to_string(&resp).unwrap();
+                    return ctx.status(400).handle_json(serialized);                  },
+                None => {}
+            }
+        }
+    }
 }
 
 pub fn get_book_by_id(ctx: Context) {
@@ -35,7 +59,7 @@ pub fn get_book_by_id(ctx: Context) {
         };
 
         let serialized = serde_json::to_string(&resp).unwrap();
-        return ctx.status(200).handle_json(serialized);
+        return ctx.status(404).handle_json(serialized);
     }
 
     let serialized = serde_json::to_string(&book).unwrap();
