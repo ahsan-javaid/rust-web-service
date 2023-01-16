@@ -28,3 +28,30 @@ POST /books
 User(id, name, email)
 Book(id, title, author)
 ```
+
+### Architecture
+Here is a light architecture diagram describing the relationship between modules in rust-web-service:
+
+```
+    +--main--+    +-routes-+   +--api---+   
+    |        |--> +  GET   |-->| book   |   
+    |  http  |    +  PUT   |   | users  |    
+    | server |    |  POST  |   |        |
+    |        |    | DELETE |   |        |
+    +---+----+    +--------+   +--------+
+        |       http listner      |
+        |Roouting & Handler thread|
+        +-------------------------+
+                    |
+                    |
+                    |
+    +-models-+   +--config--+    +----db----+
+    |        |-->|  env     |    | queries  |
+    |  book  |   +----------+ -->|-----------      
+    |  user  |   |  db      |    | populate |
+    |        |   | connect  |    |  models  |     
+    +---+----+   +----------+    +----------+
+        |                         |
+        |       Database handling |
+        +-------------------------+
+```
