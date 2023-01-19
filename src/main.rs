@@ -28,7 +28,15 @@ fn main() {
         CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT);
         CREATE TABLE IF NOT EXISTS books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, author TEXT);
     ";
-    connection.execute(query).unwrap();
+
+    match connection.execute(query) {
+        Ok(_) => {
+            println!("Migrations executed");
+        },
+        Err(e) => {
+            panic!("DB error: {:?}", e);
+        }
+    }
 
     for stream in listener.incoming() {
         match stream {
