@@ -1,3 +1,4 @@
 /target
 deploy.sh
 db.db
+sqlite.db

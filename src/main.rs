@@ -22,7 +22,7 @@ fn main() {
     println!("Listening for connections on port {}", config.port);
 
     // DB PART
-    let connection = sqlite::open("db.db").unwrap();
+    let connection = sqlite::open(config.db).unwrap();
 
     let query = "
         CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT);
