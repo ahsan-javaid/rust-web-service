@@ -65,12 +65,21 @@ impl Book {
         }
     }
 
-    pub fn create(book: &Book) {
+    pub fn create(book: &mut Book) {
         let connection = establish_connection();
+        
         let q = format!(
-            "INSERT INTO books (title, author) values ('{}', '{}')",
+            "INSERT INTO books (title, author) values ('{}', '{}');
+             SELECT * from books where id = (SELECT MAX(id) AS id FROM books);
+            ",
             &book.title, &book.author
         );
-        let _ = connection.execute(q).unwrap();
+        
+        connection.iterate(q, |pairs| {
+            let id = pairs[0].1.unwrap_or("");
+            book.id = id.parse::<u32>().unwrap_or(0);
+           
+            true
+        }).unwrap();
     }
 }

@@ -12,15 +12,15 @@ pub fn get_users(ctx: Context) {
 
 pub fn create_user(ctx: Context) {
     let payload: UserPayload = serde_json::from_str(&ctx.body).unwrap();
-    let user = User {
+    let mut user = User {
         id: 0,
         name: payload.name.clone(),
         email: payload.email.clone()
     };
 
-    User::create(&user);
+    User::create(&mut user);
 
-    let serialized = serde_json::to_string(&payload).unwrap();
+    let serialized = serde_json::to_string(&user).unwrap();
     ctx.handle_json(serialized);
 }
 

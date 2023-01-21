@@ -13,15 +13,15 @@ pub fn get_books(ctx: Context) {
 pub fn create_book(ctx: Context) {
     match serde_json::from_str::<BookPayload>(&ctx.body) {
         Ok(payload) => {
-            let book = Book {
+            let mut book = Book {
                 id: 0,
                 title: payload.title.clone(),
                 author: payload.author.clone()
             };
         
-            Book::create(&book);
+            Book::create(&mut book);
         
-            let serialized = serde_json::to_string(&payload).unwrap();
+            let serialized = serde_json::to_string(&book).unwrap();
             ctx.handle_json(serialized);
         },
         Err(e) => {

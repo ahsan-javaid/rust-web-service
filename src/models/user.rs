@@ -62,12 +62,21 @@ impl User {
         }
     }
 
-    pub fn create(user: &User) {
+    pub fn create(user: &mut User) {
         let connection = establish_connection();
+        
         let q = format!(
-            "INSERT INTO Users (name, email) values ('{}', '{}')",
+            "INSERT INTO Users (name, email) values ('{}', '{}');
+             SELECT * from Users where id = (SELECT MAX(id) AS id FROM Users);
+            ",
             &user.name, &user.email
         );
-        let _ = connection.execute(q).unwrap();
+        
+        connection.iterate(q, |pairs| {
+            let id = pairs[0].1.unwrap_or("");
+            user.id = id.parse::<u32>().unwrap_or(0);
+           
+            true
+        }).unwrap();
     }
 }
