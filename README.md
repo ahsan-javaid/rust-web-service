@@ -12,6 +12,13 @@ sqlite
 serde
 ```
 
+### Enviroment
+Creat .env file in the root of the project
+```
+PORT=5000
+DB=sqlite.db
+```
+
 ### API documentation
 Base url: http://localhost:5000
 ```
