@@ -1,14 +1,16 @@
 use std::net::{TcpListener, TcpStream};
 use std::thread;
+use sqlite;
+
 mod types;
-use crate::types::context::Context;
 mod config;
 mod routes;
 mod models;
-use crate::config::env::*;
 mod api;
+
+use crate::types::context::Context;
 use crate::routes::router::router_handler;
-use sqlite;
+use crate::config::env::*;
 
 fn handle_client(stream: TcpStream) {
     let request = Context::from(stream);

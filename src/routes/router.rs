@@ -1,9 +1,8 @@
 use crate::api::user::get_users;
 use crate::api::user::*;
-use crate::types::context::Context;
-
 use crate::api::book::create_book;
 use crate::api::book::*;
+use crate::types::context::Context;
 
 pub fn router_handler(r: Context) {
     r.log();
