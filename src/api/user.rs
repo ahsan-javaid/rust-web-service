@@ -15,7 +15,8 @@ pub fn create_user(ctx: Context) {
     let mut user = User {
         id: 0,
         name: payload.name.clone(),
-        email: payload.email.clone()
+        email: payload.email.clone(),
+        password: "****".to_string()
     };
 
     User::create(&mut user);

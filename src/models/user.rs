@@ -5,6 +5,7 @@ pub struct User {
     pub id: u32,
     pub name: String,
     pub email: String,
+    pub password: String,
 }
 
 impl User {
@@ -13,6 +14,7 @@ impl User {
             id: 0,
             name: "".to_string(),
             email: "".to_string(),
+            password: "****".to_string(),
         }
     }
 
