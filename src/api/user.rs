@@ -11,18 +11,52 @@ pub fn get_users(ctx: Context) {
 }
 
 pub fn create_user(ctx: Context) {
-    let payload: UserPayload = serde_json::from_str(&ctx.body).unwrap();
-    let mut user = User {
-        id: 0,
-        name: payload.name.clone(),
-        email: payload.email.clone(),
-        password: "****".to_string()
-    };
+    match serde_json::from_str::<UserPayload>(&ctx.body) {
+        Ok(payload) => {
+            let mut user = User {
+                id: 0,
+                name: payload.name.clone(),
+                email: payload.email.clone(),
+                password: payload.password.clone()
+            };
+        
+            User::create(&mut user);
+        
+            let serialized = serde_json::to_string(&user).unwrap();
+            ctx.handle_json(serialized);
+        },
+        Err(e) => {
+            match e.to_string().find("name") {
+                Some(_) => {
+                    let resp = Message {
+                        msg: String::from("name field is required")
+                    };
+                    let serialized = serde_json::to_string(&resp).unwrap();
+                    return ctx.status(400).handle_json(serialized);                },
+                None => {}
+            }
 
-    User::create(&mut user);
+            match e.to_string().find("email") {
+                Some(_) => {
+                    let resp = Message {
+                        msg: String::from("email field is required")
+                    };
+                    let serialized = serde_json::to_string(&resp).unwrap();
+                    return ctx.status(400).handle_json(serialized);                  },
+                None => {}
+            }
 
-    let serialized = serde_json::to_string(&user).unwrap();
-    ctx.handle_json(serialized);
+            match e.to_string().find("password") {
+                Some(_) => {
+                    let resp = Message {
+                        msg: String::from("password field is required")
+                    };
+                    let serialized = serde_json::to_string(&resp).unwrap();
+                    return ctx.status(400).handle_json(serialized);                  },
+                None => {}
+            }
+        }
+    }
 }
 
 pub fn get_user_by_id(ctx: Context) {

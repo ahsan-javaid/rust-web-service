@@ -1,3 +1,4 @@
+use bcrypt::{DEFAULT_COST, hash};
 use crate::config::db::*;
 use serde::{Deserialize, Serialize};
 #[derive(Serialize, Deserialize, Debug)]
@@ -66,18 +67,19 @@ impl User {
 
     pub fn create(user: &mut User) {
         let connection = establish_connection();
-        
+        let hashed = hash(user.password.clone(), DEFAULT_COST).unwrap();
+
         let q = format!(
-            "INSERT INTO Users (name, email) values ('{}', '{}');
+            "INSERT INTO Users (name, email, password) values ('{}', '{}', '{}');
              SELECT * from Users where id = (SELECT MAX(id) AS id FROM Users);
             ",
-            &user.name, &user.email
+            &user.name, &user.email, &hashed
         );
         
         connection.iterate(q, |pairs| {
             let id = pairs[0].1.unwrap_or("");
             user.id = id.parse::<u32>().unwrap_or(0);
-           
+            user.password = "****".to_string();
             true
         }).unwrap();
     }
