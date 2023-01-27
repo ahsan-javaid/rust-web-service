@@ -7,6 +7,7 @@ mod config;
 mod routes;
 mod models;
 mod api;
+mod utils;
 
 use crate::types::context::Context;
 use crate::routes::router::router_handler;
