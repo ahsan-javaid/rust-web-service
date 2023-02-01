@@ -76,3 +76,23 @@ pub fn get_user_by_id(ctx: Context) {
     let serialized = serde_json::to_string(&user).unwrap();
     ctx.handle_json(serialized);
 }
+
+pub fn put_user_by_id(ctx: Context) {
+    let mut user = User::new();
+
+    User::find_by_id(ctx.param, &mut user);
+    
+    if user.id == 0 {
+        let resp = Message {
+            msg: String::from("User not found")
+        };
+
+        let serialized = serde_json::to_string(&resp).unwrap();
+        return ctx.status(404).handle_json(serialized);
+    }   
+
+    User::update(&mut user);
+
+    let serialized = serde_json::to_string(&user).unwrap();
+    ctx.handle_json(serialized);
+}

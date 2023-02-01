@@ -65,3 +65,7 @@ pub fn get_book_by_id(ctx: Context) {
     let serialized = serde_json::to_string(&book).unwrap();
     ctx.status(200).handle_json(serialized);
 }
+
+pub fn put_book_by_id(ctx: Context) {
+    
+}

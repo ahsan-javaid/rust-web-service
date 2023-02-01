@@ -83,4 +83,22 @@ impl User {
             true
         }).unwrap();
     }
+
+    pub fn update(user: &mut User) {
+        let connection = establish_connection();
+
+        let q = format!(
+            "UPDATE Users SET name = '{}', email= '{}' WHERE id = '{}';
+             SELECT * from Users where id = {};
+            ",
+            &user.name, &user.email, &user.id, &user.id
+        );
+        
+        connection.iterate(q, |pairs| {
+            let id = pairs[0].1.unwrap_or("");
+            user.id = id.parse::<u32>().unwrap_or(0);
+            user.password = "****".to_string();
+            true
+        }).unwrap();
+    }
 }

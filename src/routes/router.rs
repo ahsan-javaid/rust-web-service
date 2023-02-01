@@ -8,6 +8,7 @@ pub fn router_handler(r: Context) {
     r.log();
     match r.method.as_str() {
         "GET" => get(r),
+        "PUT" => put(r),
         "POST" => post(r),
         _ => println!("Ain't special"),
     }
@@ -28,6 +29,18 @@ fn get(mut ctx: Context) {
                 _ => {}
             }
         }
+    }
+}
+
+fn put(mut ctx: Context) {
+    // Parameter handling
+    let urls_parts: Vec<&str> = ctx.url.as_str().split("/").collect();
+    ctx.param = urls_parts[2].parse::<u32>().unwrap();
+
+    match urls_parts[1] {
+        "users" => put_user_by_id(ctx),
+        "books" => put_book_by_id(ctx),
+        _ => {}
     }
 }
 
