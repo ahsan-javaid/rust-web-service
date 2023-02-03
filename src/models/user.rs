@@ -86,7 +86,7 @@ impl User {
 
     pub fn update(user: &mut User) {
         let connection = establish_connection();
-
+        println!("user is here {:?}", user);
         let q = format!(
             "UPDATE Users SET name = '{}', email= '{}' WHERE id = '{}';
              SELECT * from Users where id = {};

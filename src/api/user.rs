@@ -78,21 +78,51 @@ pub fn get_user_by_id(ctx: Context) {
 }
 
 pub fn put_user_by_id(ctx: Context) {
-    let mut user = User::new();
+    match serde_json::from_str::<UserPayload>(&ctx.body) {
+        Ok(payload) => {
+            let mut user = User {
+                id: ctx.param,
+                name: payload.name.clone(),
+                email: payload.email.clone(),
+                password: payload.password.clone()
+            };
+        
+            User::update(&mut user);
+        
+            let serialized = serde_json::to_string(&user).unwrap();
+            ctx.handle_json(serialized);
+        },
+        Err(e) => {
+            println!("error {:?}",e);
+            match e.to_string().find("name") {
+                Some(_) => {
+                    let resp = Message {
+                        msg: String::from("name field is required")
+                    };
+                    let serialized = serde_json::to_string(&resp).unwrap();
+                    return ctx.status(400).handle_json(serialized);                },
+                None => {}
+            }
 
-    User::find_by_id(ctx.param, &mut user);
-    
-    if user.id == 0 {
-        let resp = Message {
-            msg: String::from("User not found")
-        };
+            match e.to_string().find("email") {
+                Some(_) => {
+                    let resp = Message {
+                        msg: String::from("email field is required")
+                    };
+                    let serialized = serde_json::to_string(&resp).unwrap();
+                    return ctx.status(400).handle_json(serialized);                  },
+                None => {}
+            }
 
-        let serialized = serde_json::to_string(&resp).unwrap();
-        return ctx.status(404).handle_json(serialized);
-    }   
-
-    User::update(&mut user);
-
-    let serialized = serde_json::to_string(&user).unwrap();
-    ctx.handle_json(serialized);
+            match e.to_string().find("password") {
+                Some(_) => {
+                    let resp = Message {
+                        msg: String::from("password field is required")
+                    };
+                    let serialized = serde_json::to_string(&resp).unwrap();
+                    return ctx.status(400).handle_json(serialized);                  },
+                None => {}
+            }
+        }
+    }
 }
