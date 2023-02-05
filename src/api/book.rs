@@ -67,5 +67,41 @@ pub fn get_book_by_id(ctx: Context) {
 }
 
 pub fn put_book_by_id(ctx: Context) {
-    
+    match serde_json::from_str::<BookPayload>(&ctx.body) {
+        Ok(payload) => {
+            let mut book = Book {
+                id: ctx.param,
+                title: payload.title.clone(),
+                author: payload.title.clone()
+            };
+        
+            Book::update(&mut book);
+        
+            let serialized = serde_json::to_string(&book).unwrap();
+            ctx.handle_json(serialized);
+        },
+        Err(e) => {
+            println!("error {:?}",e);
+            match e.to_string().find("title") {
+                Some(_) => {
+                    let resp = Message {
+                        msg: String::from("title field is required")
+                    };
+                    let serialized = serde_json::to_string(&resp).unwrap();
+                    return ctx.status(400).handle_json(serialized);                },
+                None => {}
+            }
+
+            match e.to_string().find("author") {
+                Some(_) => {
+                    let resp = Message {
+                        msg: String::from("author field is required")
+                    };
+                    let serialized = serde_json::to_string(&resp).unwrap();
+                    return ctx.status(400).handle_json(serialized);                  },
+                None => {}
+            }
+        }
+    }
+
 }

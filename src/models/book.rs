@@ -82,4 +82,20 @@ impl Book {
             true
         }).unwrap();
     }
+
+    pub fn update(book: &mut Book) {
+        let connection = establish_connection();
+        let q = format!(
+            "UPDATE Books SET title = '{}', author= '{}' WHERE id = '{}';
+             SELECT * from Books where id = {};
+            ",
+            &book.title, &book.author, &book.id, &book.id
+        );
+        
+        connection.iterate(q, |pairs| {
+            let id = pairs[0].1.unwrap_or("");
+            book.id = id.parse::<u32>().unwrap_or(0);
+            true
+        }).unwrap();
+    }
 }
