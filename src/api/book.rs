@@ -81,7 +81,6 @@ pub fn put_book_by_id(ctx: Context) {
             ctx.handle_json(serialized);
         },
         Err(e) => {
-            println!("error {:?}",e);
             match e.to_string().find("title") {
                 Some(_) => {
                     let resp = Message {

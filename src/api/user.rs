@@ -93,7 +93,6 @@ pub fn put_user_by_id(ctx: Context) {
             ctx.handle_json(serialized);
         },
         Err(e) => {
-            println!("error {:?}",e);
             match e.to_string().find("name") {
                 Some(_) => {
                     let resp = Message {
