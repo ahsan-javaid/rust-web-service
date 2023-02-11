@@ -59,6 +59,6 @@ Here is a light architecture diagram describing the relationship between modules
     |        |   | connect  |    |  models  |     
     +---+----+   +----------+    +----------+
         |                         |
-        |       Database handling |
+        |    Database handling    |
         +-------------------------+
 ```
