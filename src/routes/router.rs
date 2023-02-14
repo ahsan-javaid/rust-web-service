@@ -10,7 +10,8 @@ pub fn router_handler(r: Context) {
         "GET" => get(r),
         "PUT" => put(r),
         "POST" => post(r),
-        _ => println!("Ain't special"),
+        "DELETE" => delete(r),
+        _ => println!("Route not supported yet"),
     }
 }
 
@@ -48,6 +49,19 @@ fn post(ctx: Context) {
     match ctx.url.as_str() {
         "/users" => create_user(ctx),
         "/books" => create_book(ctx),
-        _ => println!("Ain't special"),
+        _ => println!("Route not supported yet"),
+    }
+}
+
+
+fn delete(mut ctx: Context) {
+    // Parameter handling
+    let urls_parts: Vec<&str> = ctx.url.as_str().split("/").collect();
+    ctx.param = urls_parts[2].parse::<u32>().unwrap();
+
+    match urls_parts[1] {
+        "users" => delete_user_by_id(ctx),
+        "books" => delete_book_by_id(ctx),
+        _ => {}
     }
 }

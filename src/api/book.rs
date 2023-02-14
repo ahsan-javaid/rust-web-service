@@ -104,3 +104,8 @@ pub fn put_book_by_id(ctx: Context) {
     }
 
 }
+
+pub fn delete_book_by_id(ctx: Context) {
+    let serialized = serde_json::to_string("deleted").unwrap();
+    ctx.status(200).handle_json(serialized);
+}
