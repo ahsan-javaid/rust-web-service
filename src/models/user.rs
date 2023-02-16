@@ -100,4 +100,17 @@ impl User {
             true
         }).unwrap();
     }
+
+    pub fn remove(id: u32) {
+        let connection = establish_connection();
+        let query = format!("DELETE FROM Users WHERE id={}", id);
+        match connection.execute(query) {
+            Ok(_) => {
+                println!("User removed: {}", id);
+            },
+            Err(e) => {
+                panic!("Unable to remove user: {:?}", e);
+            }
+        }
+    }
 }

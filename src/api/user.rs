@@ -127,7 +127,13 @@ pub fn put_user_by_id(ctx: Context) {
 }
 
 pub fn delete_user_by_id(ctx: Context) {
-    let serialized = serde_json::to_string("deleted").unwrap();
+    User::remove(ctx.param);
+    
+    let resp = Message {
+        msg: String::from("User removed successfully")
+    };
+    
+    let serialized = serde_json::to_string(resp).unwrap();
     ctx.status(200).handle_json(serialized);
 }
 
