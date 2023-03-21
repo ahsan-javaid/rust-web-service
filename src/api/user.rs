@@ -133,7 +133,7 @@ pub fn delete_user_by_id(ctx: Context) {
         msg: String::from("User removed successfully")
     };
     
-    let serialized = serde_json::to_string(resp).unwrap();
+    let serialized = serde_json::to_string(&resp).unwrap();
     ctx.status(200).handle_json(serialized);
 }
 
