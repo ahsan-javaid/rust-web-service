@@ -21,7 +21,7 @@ fn handle_client(stream: TcpStream) {
 fn main() {
     let config: Config = load_env();
     let address = format!("127.0.0.1:{}", config.port);
-    let listener = TcpListener::bind(address).unwrap(); // Todo: get rid of unwrap
+    let listener = TcpListener::bind(address).unwrap();
     println!("Listening for connections on port {}", config.port);
 
     // DB PART
