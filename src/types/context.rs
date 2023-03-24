@@ -55,7 +55,6 @@ impl Context {
                 let req_parts = req_str.split(" ");
                 let vec: Vec<&str> = req_parts.collect();
                 let body: String;
-
                 // Parsing request body
                 if vec[0] == "POST" {
                     let start = req_str.find("{").unwrap();
@@ -65,8 +64,15 @@ impl Context {
                     body = String::from("")
                 }
 
+                // Query params
+                let url_parts: Vec<&str> = vec[1].split("?").collect();
+                println!("query parts {:?}", url_parts);
+                if url_parts.len() == 2 {
+                    //Todo: process query params
+                }
+
                 Context {
-                    url: String::from(vec[1]),
+                    url: String::from(url_parts[0]),
                     body: body,
                     param: 0, // Default param
                     method: String::from(vec[0]),
