@@ -66,8 +66,12 @@ impl Context {
 
                 // Query params
                 let url_parts: Vec<&str> = vec[1].split("?").collect();
-                println!("query parts {:?}", url_parts);
                 if url_parts.len() == 2 {
+                    let q: Vec<&str> = url_parts[1].split("&").collect();
+                    for i in q.iter() {
+                        let p: Vec<&str> = i.split("=").collect();
+                        println!("{:?}", p);
+                    }
                     //Todo: process query parameters
                 }
 
