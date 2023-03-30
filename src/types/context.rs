@@ -11,6 +11,9 @@ pub struct Context {
     pub status: u16,
     pub method: String, // GET, PUT, POST, DELETE
     pub socket: TcpStream,
+    pub limit: u32,
+    pub offset: u32,
+    pub search: String,
 }
 
 impl Context {
@@ -66,10 +69,25 @@ impl Context {
 
                 // Query params
                 let url_parts: Vec<&str> = vec[1].split("?").collect();
+                let mut limit: u32 = 0;
+                let mut offset: u32 = 0;
+                let mut search: String = String::from("");
                 if url_parts.len() == 2 {
                     let q: Vec<&str> = url_parts[1].split("&").collect();
                     for i in q.iter() {
                         let p: Vec<&str> = i.split("=").collect();
+                        match p[0] {
+                            "limit" => {
+
+                            },
+                            "offset" => {
+
+                            },
+                            "search" => {
+
+                            },
+                            _ => println!("Ain't special"),
+                        }
                         println!("{:?}", p);
                     }
                     //Todo: process query parameters
@@ -81,7 +99,10 @@ impl Context {
                     param: 0, // Default param
                     method: String::from(vec[0]),
                     socket: stream,
-                    status: 200
+                    status: 200,
+                    limit: limit,
+                    offset: offset,
+                    search: search
                 }
             }
             Err(e) => panic!("Error: {:?}", e),
