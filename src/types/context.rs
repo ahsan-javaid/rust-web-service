@@ -78,13 +78,13 @@ impl Context {
                         let p: Vec<&str> = i.split("=").collect();
                         match p[0] {
                             "limit" => {
-
+                                // process limit
                             },
                             "offset" => {
-
+                                // process offset
                             },
                             "search" => {
-
+                                // process search
                             },
                             _ => println!("Ain't special"),
                         }
