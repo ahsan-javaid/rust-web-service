@@ -62,3 +62,6 @@ Here is a light architecture diagram describing the relationship between modules
         |    Database handling    |
         +-------------------------+
 ```
+
+Todo:
+- Add docker config
