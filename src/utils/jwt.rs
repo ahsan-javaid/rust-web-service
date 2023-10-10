@@ -8,7 +8,7 @@ struct Claims {
    email: String
 }
 
-pub fn create_jwt(user: User) -> Result<String, jsonwebtoken::errors::Error> {
+pub fn create_jwt(user: &User) -> Result<String, jsonwebtoken::errors::Error> {
   let my_claims = Claims {
     id: user.id,
     email: user.email.clone()

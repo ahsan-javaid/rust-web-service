@@ -1,5 +1,5 @@
-use bcrypt::{DEFAULT_COST, hash};
 use crate::config::db::*;
+use bcrypt::{hash, DEFAULT_COST};
 use serde::{Deserialize, Serialize};
 #[derive(Serialize, Deserialize, Debug)]
 pub struct User {
@@ -75,13 +75,15 @@ impl User {
             ",
             &user.name, &user.email, &hashed
         );
-        
-        connection.iterate(q, |pairs| {
-            let id = pairs[0].1.unwrap_or("");
-            user.id = id.parse::<u32>().unwrap_or(0);
-            user.password = "****".to_string();
-            true
-        }).unwrap();
+
+        connection
+            .iterate(q, |pairs| {
+                let id = pairs[0].1.unwrap_or("");
+                user.id = id.parse::<u32>().unwrap_or(0);
+                user.password = "****".to_string();
+                true
+            })
+            .unwrap();
     }
 
     pub fn update(user: &mut User) {
@@ -92,13 +94,15 @@ impl User {
             ",
             &user.name, &user.email, &user.id, &user.id
         );
-        
-        connection.iterate(q, |pairs| {
-            let id = pairs[0].1.unwrap_or("");
-            user.id = id.parse::<u32>().unwrap_or(0);
-            user.password = "****".to_string();
-            true
-        }).unwrap();
+
+        connection
+            .iterate(q, |pairs| {
+                let id = pairs[0].1.unwrap_or("");
+                user.id = id.parse::<u32>().unwrap_or(0);
+                user.password = "****".to_string();
+                true
+            })
+            .unwrap();
     }
 
     pub fn remove(id: u32) {
@@ -107,7 +111,7 @@ impl User {
         match connection.execute(query) {
             Ok(_) => {
                 println!("User removed: {}", id);
-            },
+            }
             Err(e) => {
                 panic!("Unable to remove user: {:?}", e);
             }
