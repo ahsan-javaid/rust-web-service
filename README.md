@@ -3,7 +3,7 @@ Rust web server implemented using tcp protocol without using any frameworks or l
 
 ### Runnig the project
 ```
-cargo run
+cargo run .
 ```
 
 ### Dependencies
