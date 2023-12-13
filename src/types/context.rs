@@ -9,7 +9,7 @@ pub struct Context {
     pub body: String,
     pub param: u32,
     pub status: u16,
-    pub method: String, // GET, PUT, POST, DELETE
+    pub method: String, // GET, PUT, POST, DELETE, PATCH
     pub socket: TcpStream,
     pub limit: u32,
     pub offset: u32,
