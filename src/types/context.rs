@@ -13,7 +13,7 @@ pub struct Context {
     pub socket: TcpStream,
     pub limit: u32,
     pub offset: u32,
-    pub search: String,
+    pub search: String, // query params
 }
 
 impl Context {
