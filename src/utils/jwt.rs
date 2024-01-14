@@ -17,7 +17,7 @@ pub fn create_jwt(user: &User) -> Result<String, jsonwebtoken::errors::Error> {
    encode(&Header::default(), &my_claims, &EncodingKey::from_secret("secret".as_ref()))
 }
 
-fn verify_jwt(token: &str, decoding_key: &str) {
+fn verify_jwt(token: &str, decoding_key: &str) -> Result<serde_json::Value, jsonwebtoken::errors::Error>  {
   match decode::<serde_json::Value>(
       &token,
       &DecodingKey::from_secret(decoding_key.as_ref()),
@@ -26,9 +26,11 @@ fn verify_jwt(token: &str, decoding_key: &str) {
       Ok(token_data) => {
           println!("Token is valid: {:?}", token_data);
           // Here, you can access token_data.claims to get the claims of the JWT
+          Ok(token_data.claims)
       }
       Err(e) => {
           println!("Token is invalid: {:?}", e);
+          Err(e)
       }
   }
 }
