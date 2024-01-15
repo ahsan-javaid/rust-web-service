@@ -79,6 +79,12 @@ impl Context {
                         match p[0] {
                             "limit" => {
                                 // process limit
+                                match p[1].parse::<u32>() {
+                                    Ok(l_value) => {
+                                      limit = l_value;
+                                    }
+                                    Err(_) => {}
+                                }
                             },
                             "offset" => {
                                 // process offset
