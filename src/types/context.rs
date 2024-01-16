@@ -88,6 +88,12 @@ impl Context {
                             },
                             "offset" => {
                                 // process offset
+                                match p[1].parse::<u32>() {
+                                    Ok(l_value) => {
+                                      offset = l_value;
+                                    }
+                                    Err(_) => {}
+                                }
                             },
                             "search" => {
                                 // process search
