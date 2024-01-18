@@ -97,6 +97,7 @@ impl Context {
                             },
                             "search" => {
                                 // process search
+                                search = String::from(p[1]);
                             },
                             _ => println!("Ain't special"),
                         }
