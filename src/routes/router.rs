@@ -24,6 +24,7 @@ fn get(mut ctx: Context) {
             // Parameter handling
             let urls_parts: Vec<&str> = ctx.url.as_str().split("/").collect();
             ctx.param = urls_parts[2].parse::<u32>().unwrap();
+            // match route name
             match urls_parts[1] {
                 "users" => get_user_by_id(ctx),
                 "books" => get_book_by_id(ctx),
