@@ -67,3 +67,6 @@ Here is a light architecture diagram describing the relationship between modules
         |    Database handling    |
         +-------------------------+
 ```
+
+### Contribution
+Pull requests are most welcome.
