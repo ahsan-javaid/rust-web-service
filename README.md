@@ -70,3 +70,7 @@ Here is a light architecture diagram describing the relationship between modules
 
 ### Contribution
 Pull requests are most welcome.
+
+### Swagger docs
+
+Add swagger docs at /doc
