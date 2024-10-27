@@ -4,6 +4,7 @@ use crate::types::message::Message;
 use crate::types::user::UserPayload;
 use crate::types::user::UserResponse;
 use crate::utils::jwt::create_jwt;
+use crate::utils::hash::hash_password;
 
 pub fn get_users(ctx: Context) {
     let condition = String::from("");
@@ -19,7 +20,7 @@ pub fn create_user(ctx: Context) {
                 id: 0,
                 name: payload.name.clone(),
                 email: payload.email.clone(),
-                password: payload.password.clone(),
+                password: hash_password(payload.password.as_ref(), "asdf"),
             };
 
             User::create(&mut user);
