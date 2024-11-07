@@ -1,6 +1,6 @@
 [package]
 name = "rust-web-service"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["ahsan-javaid <mister.ahsan.javaid@gmail.com>"]
 edition = "2018"
 
