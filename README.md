@@ -1,15 +1,5 @@
 # rust-web-service
-This project demonstrates how to build a basic web server in Rust from scratch, using only the standard library. It covers the implementation of a TCP server, request parsing, routing, and response handling. The goal is to provide a deeper understanding of how web servers work under the hood and to showcase Rust's capabilities in systems programming.
-
-The server supports basic CRUD operations for `User` and `Book` models, with data stored in an SQLite database. The project is structured to separate concerns, making it easier to maintain and extend. Key components include:
-
-- **HTTP Server**: Listens for incoming TCP connections and handles HTTP requests.
-- **Routing**: Directs requests to the appropriate handler based on the URL and HTTP method.
-- **Handlers**: Process requests, interact with the database, and generate responses.
-- **Models**: Define the structure of the data and provide methods for database interaction.
-- **Configuration**: Manages environment variables and database connections.
-
-By following this project, you will gain insights into low-level web server development and Rust's concurrency model, which ensures safe and efficient handling of multiple requests.
+Rust web server implemented using tcp protocol without using any frameworks or libraries.
 
 ### Runnig the project
 ```
@@ -83,4 +73,5 @@ Pull requests are most welcome.
 
 ### Swagger docs
 
-Add swagger docs at /doc
+Add swagger docs at /docH- **Handlers .
+-

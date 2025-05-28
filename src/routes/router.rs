@@ -11,7 +11,7 @@ pub fn router_handler(r: Context) {
         "PUT" => put(r),
         "POST" => post(r),
         "DELETE" => delete(r),
-        _ => println!("Route not supported yet"),
+        _ => println!("Route not supported yet!"),
     }
 }
 
