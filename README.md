@@ -73,5 +73,5 @@ Pull requests are most welcome.
 
 ### Swagger docs
 
-Add swagger docs at /docH- **Handlers .
+Add swagger docs at /docH- **Handlers
 -
