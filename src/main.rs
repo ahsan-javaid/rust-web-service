@@ -1,17 +1,17 @@
+use sqlite;
 use std::net::{TcpListener, TcpStream};
 use std::thread;
-use sqlite;
 
-mod types;
-mod config;
-mod routes;
-mod models;
 mod api;
+mod config;
+mod models;
+mod routes;
+mod types;
 mod utils;
 
-use crate::types::context::Context;
-use crate::routes::router::router_handler;
 use crate::config::env::*;
+use crate::routes::router::router_handler;
+use crate::types::context::Context;
 
 fn handle_client(stream: TcpStream) {
     let request = Context::from(stream);
@@ -35,7 +35,7 @@ fn main() {
     match connection.execute(query) {
         Ok(_) => {
             println!("Migrations executed");
-        },
+        }
         Err(e) => {
             panic!("DB error: {:?}", e);
         }

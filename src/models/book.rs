@@ -8,12 +8,11 @@ pub struct Book {
 }
 
 impl Book {
-
     pub fn new() -> Book {
         Book {
             id: 0,
             title: "".to_string(),
-            author: "".to_string()
+            author: "".to_string(),
         }
     }
 
@@ -25,7 +24,6 @@ impl Book {
 
         connection
             .iterate(query, |pairs| {
-                
                 let mut book = Book::new();
 
                 for p in pairs {
@@ -33,15 +31,15 @@ impl Book {
                         "id" => {
                             let id = p.1.unwrap_or("0");
                             book.id = id.parse::<u32>().unwrap_or(0);
-                        },
+                        }
                         "title" => {
                             let title = p.1.unwrap_or("");
                             book.title = title.to_string();
-                        },
+                        }
                         "author" => {
                             let author = p.1.unwrap_or("");
                             book.author = author.to_string();
-                        },
+                        }
                         _ => {}
                     }
                 }
@@ -57,7 +55,7 @@ impl Book {
 
     pub fn find_by_id(id: u32, book: &mut Book) {
         let books = Book::find_all(String::from(format!("where id={}", id)));
-        
+
         for b in books.iter() {
             book.id = b.id;
             book.title = b.title.clone();
@@ -67,20 +65,22 @@ impl Book {
 
     pub fn create(book: &mut Book) {
         let connection = establish_connection();
-        
+
         let q = format!(
             "INSERT INTO books (title, author) values ('{}', '{}');
              SELECT * from books where id = (SELECT MAX(id) AS id FROM books);
             ",
             &book.title, &book.author
         );
-        
-        connection.iterate(q, |pairs| {
-            let id = pairs[0].1.unwrap_or("");
-            book.id = id.parse::<u32>().unwrap_or(0);
-           
-            true
-        }).unwrap();
+
+        connection
+            .iterate(q, |pairs| {
+                let id = pairs[0].1.unwrap_or("");
+                book.id = id.parse::<u32>().unwrap_or(0);
+
+                true
+            })
+            .unwrap();
     }
 
     pub fn update(book: &mut Book) {
@@ -91,11 +91,13 @@ impl Book {
             ",
             &book.title, &book.author, &book.id, &book.id
         );
-        
-        connection.iterate(q, |pairs| {
-            let id = pairs[0].1.unwrap_or("");
-            book.id = id.parse::<u32>().unwrap_or(0);
-            true
-        }).unwrap();
+
+        connection
+            .iterate(q, |pairs| {
+                let id = pairs[0].1.unwrap_or("");
+                book.id = id.parse::<u32>().unwrap_or(0);
+                true
+            })
+            .unwrap();
     }
 }

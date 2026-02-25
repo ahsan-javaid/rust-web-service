@@ -3,8 +3,8 @@ use crate::types::context::Context;
 use crate::types::message::Message;
 use crate::types::user::UserPayload;
 use crate::types::user::UserResponse;
-use crate::utils::jwt::create_jwt;
 use crate::utils::hash::hash_password;
+use crate::utils::jwt::create_jwt;
 
 pub fn get_users(ctx: Context) {
     let condition = String::from("");
@@ -32,7 +32,7 @@ pub fn create_user(ctx: Context) {
                     id: user.id,
                     name: user.name.clone(),
                     email: payload.email.clone(),
-                    password: String::from("")
+                    password: String::from(""),
                 },
                 token: token,
             };
