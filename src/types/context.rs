@@ -81,24 +81,24 @@ impl Context {
                                 // process limit
                                 match p[1].parse::<u32>() {
                                     Ok(l_value) => {
-                                      limit = l_value;
+                                        limit = l_value;
                                     }
                                     Err(_) => {}
                                 }
-                            },
+                            }
                             "offset" => {
                                 // process offset
                                 match p[1].parse::<u32>() {
                                     Ok(l_value) => {
-                                      offset = l_value;
+                                        offset = l_value;
                                     }
                                     Err(_) => {}
                                 }
-                            },
+                            }
                             "search" => {
                                 // process search
                                 search = String::from(p[1]);
-                            },
+                            }
                             _ => println!("Ain't special"),
                         }
                         println!("{:?}", p);
@@ -115,7 +115,7 @@ impl Context {
                     status: 200,
                     limit: limit,
                     offset: offset,
-                    search: search
+                    search: search,
                 }
             }
             Err(e) => panic!("Error: {:?}", e),

@@ -47,7 +47,10 @@ fn sha256(input: &[u8]) -> [u32; 8] {
         for i in 16..64 {
             let s0 = rotate_left(w[i - 15], 7) ^ rotate_left(w[i - 15], 18) ^ (w[i - 15] >> 3);
             let s1 = rotate_left(w[i - 2], 17) ^ rotate_left(w[i - 2], 19) ^ (w[i - 2] >> 10);
-            w[i] = w[i - 16].wrapping_add(s0).wrapping_add(w[i - 7]).wrapping_add(s1);
+            w[i] = w[i - 16]
+                .wrapping_add(s0)
+                .wrapping_add(w[i - 7])
+                .wrapping_add(s1);
         }
 
         let mut a = h[0];
@@ -62,7 +65,11 @@ fn sha256(input: &[u8]) -> [u32; 8] {
         for i in 0..64 {
             let s1 = rotate_left(e, 6) ^ rotate_left(e, 11) ^ rotate_left(e, 25);
             let ch = (e & f) ^ ((!e) & g);
-            let temp1 = h_temp.wrapping_add(s1).wrapping_add(ch).wrapping_add(K[i]).wrapping_add(w[i]);
+            let temp1 = h_temp
+                .wrapping_add(s1)
+                .wrapping_add(ch)
+                .wrapping_add(K[i])
+                .wrapping_add(w[i]);
             let s0 = rotate_left(a, 2) ^ rotate_left(a, 13) ^ rotate_left(a, 22);
             let maj = (a & b) ^ (a & c) ^ (b & c);
             let temp2 = s0.wrapping_add(maj);
@@ -92,7 +99,8 @@ fn sha256(input: &[u8]) -> [u32; 8] {
 
 fn generate_salt() -> String {
     let start = SystemTime::now();
-    let since_epoch = start.duration_since(UNIX_EPOCH)
+    let since_epoch = start
+        .duration_since(UNIX_EPOCH)
         .expect("Time went backwards");
     let nanos = since_epoch.as_nanos();
     format!("{:x}", nanos)
@@ -101,7 +109,9 @@ fn generate_salt() -> String {
 pub fn hash_password(password: &str, salt: &str) -> String {
     let combined = format!("{}{}", salt, password);
     let hash = sha256(combined.as_bytes());
-    hash.iter().map(|&x| format!("{:08x}", x)).collect::<String>()
+    hash.iter()
+        .map(|&x| format!("{:08x}", x))
+        .collect::<String>()
 }
 
 fn verify_password(password: &str, salt: &str, stored_hash: &str) -> bool {

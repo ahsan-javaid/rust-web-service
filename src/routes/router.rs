@@ -1,7 +1,7 @@
-use crate::api::user::get_users;
-use crate::api::user::*;
 use crate::api::book::create_book;
 use crate::api::book::*;
+use crate::api::user::get_users;
+use crate::api::user::*;
 use crate::types::context::Context;
 
 pub fn router_handler(r: Context) {
@@ -53,7 +53,6 @@ fn post(ctx: Context) {
         _ => println!("Route not supported yet"),
     }
 }
-
 
 fn delete(mut ctx: Context) {
     // Parameter handling
