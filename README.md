@@ -8,7 +8,7 @@ cargo run .
 or 
 
 ```
-cargo r
+cargo run
 ```
 
 ### Dependencies
