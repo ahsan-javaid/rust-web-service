@@ -1,14 +1,12 @@
 use sqlite;
 use std::net::{TcpListener, TcpStream};
 use std::thread;
-
 mod api;
 mod config;
 mod models;
 mod routes;
 mod types;
 mod utils;
-
 use crate::config::env::*;
 use crate::routes::router::router_handler;
 use crate::types::context::Context;
